@@ -8,18 +8,20 @@
 
 #include <list>
 #include <memory>
-#include "User.h"
-#include "Message.h"
+class Message;
+class MessageReceiver;
+//#include "Message.h"
+//#include "MessageReceiver.h"
 
 class MessageSender {
 public:
-    virtual void subscribe(std::shared_ptr<User> user) = 0;
-    virtual void unsubscribe(std::shared_ptr<User> user) = 0;
-    virtual void send(Message m) = 0;
+    virtual void subscribe(std::shared_ptr<MessageReceiver> user) = 0;
+    virtual void unsubscribe(std::shared_ptr<MessageReceiver> user) = 0;
+    virtual void send(Message & m) = 0;
 
 
-private:
-    std::list<std::shared_ptr<User>> users;
+public:
+    std::list<std::shared_ptr<MessageReceiver>> users;
 };
 
 

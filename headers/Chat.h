@@ -6,8 +6,21 @@
 #define ELABORATO_CHAT_H
 
 
-class Chat {
+#include "MessageSender.h"
+#include "Message.h"
+#include "MessageReceiver.h"
+#include <memory>
 
+class Chat : public MessageSender {
+
+public:
+    explicit Chat(int channel);
+    virtual void send(Message & m) override;
+    virtual void subscribe(std::shared_ptr<MessageReceiver> user) override;
+    virtual void unsubscribe(std::shared_ptr<MessageReceiver> user) override;
+
+public:
+    int channel;
 };
 
 

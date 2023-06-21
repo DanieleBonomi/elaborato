@@ -5,13 +5,14 @@
 #ifndef ELABORATO_MESSAGERECEIVER_H
 #define ELABORATO_MESSAGERECEIVER_H
 
-#include "Message.h"
+class Message;
+//#include "Message.h"
 
 class MessageReceiver {
-protected:
+public:
     virtual ~MessageReceiver();
     MessageReceiver() = default;
-    virtual void onMessageReceived(Message m) = 0;
+    virtual void onMessageReceived(Message & m) = 0;
 };
 
 
