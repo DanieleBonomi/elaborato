@@ -8,6 +8,7 @@
 
 #include <list>
 #include <memory>
+
 class Message;
 class MessageReceiver;
 //#include "Message.h"

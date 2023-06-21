@@ -3,3 +3,7 @@
 //
 
 #include "../headers/User.h"
+
+User::User(const std::string &username) : username(username) {
+
+}

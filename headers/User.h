@@ -6,8 +6,16 @@
 #define ELABORATO_USER_H
 
 
-class User {
+#include <string>
+#include "MessageReceiver.h"
 
+class User : public MessageReceiver {
+public:
+    explicit User(const std::string &username);
+
+private:
+    int id;
+    std::string username;
 };
 
 
