@@ -26,7 +26,7 @@ int Server::getFreeId() {
     return t;
 }
 
-std::shared_ptr<Server> Server::getIstance() {
+std::shared_ptr<Server> Server::getInstance() {
     if (instance==nullptr) {
         instance = std::shared_ptr<Server>(new Server(10));
     }

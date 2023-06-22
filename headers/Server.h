@@ -12,7 +12,7 @@
 
 class Server { // singleton
 public:
-    static std::shared_ptr<Server> getIstance();
+    static std::shared_ptr<Server> getInstance();
 
 
 

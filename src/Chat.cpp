@@ -7,11 +7,6 @@
 
 Chat::Chat(int channel) : channel(channel) {}
 
-void Chat::send(Message &m) {
-    for (const auto & item : users)
-        item->onMessageReceived(m);
-
-}
 
 void Chat::subscribe(std::shared_ptr<MessageReceiver> user) {
     if (std::find(users.begin(),users.end(),user)!=users.end()) {
@@ -23,4 +18,12 @@ void Chat::unsubscribe(std::shared_ptr<MessageReceiver> user) {
     if (std::find(users.begin(),users.end(),user)==users.end()) {
         users.remove(user);
     }
+}
+
+void Chat::send(std::string m, User *user) {
+    for (auto item : users)
+    {
+        item->
+    }
+
 }
