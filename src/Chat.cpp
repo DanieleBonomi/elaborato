@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <iostream>
 #include "../headers/Chat.h"
 
 
@@ -10,19 +11,19 @@ Chat::Chat(int channel) : channel(channel) {}
 
 
 void Chat::subscribe(MessageReceiver *user) {
-    if (std::find(users.begin(),users.end(),user)!=users.end()) {
-        users.push_back(user);
+    if (std::find(receivers.begin(), receivers.end(), user) == receivers.end()) {
+        receivers.push_back(user);
     }
 }
 
 void Chat::unsubscribe(MessageReceiver *user) {
-    if (std::find(users.begin(),users.end(),user)==users.end()) {
-        users.remove(user);
+    if (std::find(receivers.begin(), receivers.end(), user) == receivers.end()) {
+        receivers.remove(user);
     }
 }
 
 void Chat::send(std::unique_ptr<Message> message) {
-    for (auto item : users)
+    for (auto item : receivers)
     {
         message = item->onMessageReceived(std::move(message));
     }

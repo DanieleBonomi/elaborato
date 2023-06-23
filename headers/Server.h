@@ -19,7 +19,7 @@ class Server : MessageReceiver {
 public:
     ~Server() override;
 
-    // for singletom
+    // for singleton (possibly the whole pattern is pointless)
     static Server * getInstance();
 
     //from parent
@@ -30,9 +30,14 @@ public:
 
     //brand new
     Chat * getChatAtChannel(int channel) const;
+    User * getUserAtUsername(std::string & username);
     int getFreeId();
     void addUser(std::string &username); //only called by user c'tor
     void removeUser(User * user);
+
+    void signToChat(std::string & username, int channel);
+    void signAllToChat(int channel);
+
 
 
 private:

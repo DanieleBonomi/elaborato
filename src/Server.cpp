@@ -14,6 +14,7 @@ maxChats = 10;
 void Server::addChat(int channel) {
     if (chats.size() < maxChats) {
         Chat *c = new Chat(channel);
+        c->subscribe(this);
         chats.insert({channel, c});
     } else std::cout<<"WARNING: chat limit reached"<<std::endl;
 }
@@ -57,3 +58,23 @@ Server::~Server() {
     users.clear();
     chats.clear();
 }
+
+void Server::signToChat(std::string &username, int channel) {
+    chats[channel]->subscribe(getUserAtUsername(username)); //TODO fix multiple username being considered as same User (in the whole project)
+}
+
+void Server::signAllToChat(int channel) {
+    Chat * c = chats[channel];
+    for (auto user : users)
+        c->subscribe(user);
+}
+
+User *Server::getUserAtUsername(std::string &username) {
+    for (auto user : users) {
+        if (user->getUsername() == username) {
+            return user;
+        }
+    }
+    throw std::exception();
+}
+

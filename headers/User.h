@@ -18,7 +18,7 @@ public:
     void closeChat(int channel);
     void openChat(Chat *chat);
     void closeChat(Chat *chat);
-    void writeMessage(const std::string & text, Chat *chat);
+    void writeMessage(const std::string & text, int channel);
 
     int getId() const;
 

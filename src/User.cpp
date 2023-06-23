@@ -33,8 +33,9 @@ const std::string &User::getUsername() const {
     return username;
 }
 
-void User::writeMessage(const std::string &text, Chat *chat) {
-    chat->send(text,this);
+void User::writeMessage(const std::string &text, int channel) {
+    Server::getInstance()->getChatAtChannel(channel)->send(text, this);
+
 }
 
 std::unique_ptr<Message> User::onMessageReceived(std::unique_ptr<Message> m) {
