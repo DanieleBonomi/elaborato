@@ -6,12 +6,16 @@
 #include "../headers/Server.h"
 #include "../headers/Chat.h"
 
-Server::Server(int maxChats) : maxChats(maxChats) {
+Server::Server() {
 usedID=0;
+maxChats = 10;
 }
 
-void Server::addChat(Chat *chat) {
-    chats[chat->channel] = chat;
+void Server::addChat(int channel) {
+    if (chats.size() < maxChats) {
+        Chat *c = new Chat(channel);
+        chats.insert({channel, c});
+    } else std::cout<<"WARNING: chat limit reached"<<std::endl;
 }
 
 void Server::removeChat(int channel) {
@@ -30,7 +34,7 @@ int Server::getFreeId() {
 
 Server *Server::getInstance() {
     if (instance==nullptr) {
-        instance = new Server(10);
+        instance = new Server();
     }
     return instance;
 }
@@ -40,10 +44,16 @@ std::unique_ptr<Message> Server::onMessageReceived(std::unique_ptr<Message> m) {
     return m;
 }
 
-void Server::addUser(User *user) {
-    users.push_back(user);
+void Server::addUser(std::string &username) {
+    User * u = new User(username);
+    users.push_back(u);
 }
 
 void Server::removeUser(User *user) {
     users.remove(user);
+}
+
+Server::~Server() {
+    users.clear();
+    chats.clear();
 }

@@ -17,25 +17,26 @@ class User;
 
 class Server : MessageReceiver {
 public:
+    ~Server() override;
 
     // for singletom
     static Server * getInstance();
 
     //from parent
     virtual std::unique_ptr<Message> onMessageReceived(std::unique_ptr<Message> m) override;
-    void addChat(Chat *chat);
+    void addChat(int channel);
     void removeChat(int channel);
 
 
     //brand new
     Chat * getChatAtChannel(int channel) const;
     int getFreeId();
-    void addUser(User * user); //only called by user c'tor
+    void addUser(std::string &username); //only called by user c'tor
     void removeUser(User * user);
 
 
 private:
-    explicit Server(int maxChats);
+    Server();
 
 private:
     int maxChats;
