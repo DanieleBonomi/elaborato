@@ -9,15 +9,22 @@
 #include <string>
 #include "MessageReceiver.h"
 #include "Server.h"
+#include "Chat.h"
 
 class User : public MessageReceiver {
 public:
     explicit User(const std::string &username);
     void openChat(int channel);
     void closeChat(int channel);
-    void openChat(std::shared_ptr<Chat> chat);
-    void closeChat(std::shared_ptr<Chat> chat);
-    void writeMessage(const std::string & text, const Chat &chat) const;
+    void openChat(Chat *chat);
+    void closeChat(Chat *chat);
+    void writeMessage(const std::string & text, Chat *chat);
+
+    int getId() const;
+
+    const std::string &getUsername() const;
+
+    virtual std::unique_ptr<Message> onMessageReceived(std::unique_ptr<Message> message) override;
 
 private:
     int id;

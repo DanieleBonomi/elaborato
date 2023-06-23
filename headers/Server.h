@@ -8,19 +8,31 @@
 
 #include <map>
 #include <memory>
-#include "Chat.h"
+#include <list>
 
-class Server { // singleton
+#include "MessageReceiver.h"
+
+class Chat;
+class User;
+
+class Server : MessageReceiver {
 public:
-    static std::shared_ptr<Server> getInstance();
 
+    // for singletom
+    static Server * getInstance();
 
-
-    void addChat(std::shared_ptr<Chat> chat);
+    //from parent
+    virtual std::unique_ptr<Message> onMessageReceived(std::unique_ptr<Message> m) override;
+    void addChat(Chat *chat);
     void removeChat(int channel);
-    std::shared_ptr<Chat> getChatAtChannel(int channel) const;
 
+
+    //brand new
+    Chat * getChatAtChannel(int channel) const;
     int getFreeId();
+    void addUser(User * user); //only called by user c'tor
+    void removeUser(User * user);
+
 
 private:
     explicit Server(int maxChats);
@@ -28,9 +40,10 @@ private:
 private:
     int maxChats;
     int usedID;
-    std::map<int,std::shared_ptr<Chat>> chats;
+    std::map<int,Chat *> chats;
+    std::list<User *> users;
 
-    inline static std::shared_ptr<Server> instance = nullptr; // for singleton
+    inline static Server * instance = nullptr; // for singleton
 
 };
 

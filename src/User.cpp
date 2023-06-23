@@ -2,6 +2,7 @@
 // Created by user on 21/06/2023.
 //
 
+#include <iostream>
 #include "../headers/User.h"
 
 
@@ -10,21 +11,33 @@ User::User(const std::string &username) : username(username) {
 }
 
 void User::openChat(int channel) {
-    Server::getInstance()->getChatAtChannel(channel)->subscribe(std::shared_ptr<User>(this));
+    Server::getInstance()->getChatAtChannel(channel)->subscribe(this);
 }
 
 void User::closeChat(int channel) {
-    Server::getInstance()->getChatAtChannel(channel)->unsubscribe(std::shared_ptr<User>(this));
+    Server::getInstance()->getChatAtChannel(channel)->unsubscribe(this);
 }
 
-void User::openChat(std::shared_ptr<Chat> chat) {
+void User::openChat(Chat *chat) {
     openChat(chat->channel);
 }
-void User::closeChat(std::shared_ptr<Chat> chat) {
+void User::closeChat(Chat *chat) {
     closeChat(chat->channel);
 }
 
-void User::writeMessage(const std::string &text) const {
-    chat.send()
+int User::getId() const {
+    return id;
 }
 
+const std::string &User::getUsername() const {
+    return username;
+}
+
+void User::writeMessage(const std::string &text, Chat *chat) {
+    chat->send(text,this);
+}
+
+std::unique_ptr<Message> User::onMessageReceived(std::unique_ptr<Message> m) {
+    std::cout<< "USER " << getUsername() <<" <-" <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
+    return m;
+}

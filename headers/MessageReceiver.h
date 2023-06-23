@@ -5,14 +5,14 @@
 #ifndef ELABORATO_MESSAGERECEIVER_H
 #define ELABORATO_MESSAGERECEIVER_H
 
-class Message;
-//#include "Message.h"
+#include <memory>
+#include "Message.h"
 
 class MessageReceiver {
 public:
     virtual ~MessageReceiver();
     MessageReceiver() = default;
-    virtual void onMessageReceived(const Message &m) = 0;
+    virtual std::unique_ptr<Message> onMessageReceived(std::unique_ptr <Message> m) =0;
 };
 
 

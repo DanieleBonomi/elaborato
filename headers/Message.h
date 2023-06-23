@@ -8,20 +8,19 @@
 
 #include <string>
 #include <memory>
-#include "User.h"
-#include "Chat.h"
+class User;
 
 class Message {
 public:
     const std::string &getText() const;
 
-    const std::shared_ptr<MessageReceiver> &getSender() const;
+    const User * getSender() const;
 
-    Message(const std::string &text, const std::shared_ptr<MessageReceiver> &sender);
+    Message(const std::string &text, const User * sender);
 
 private:
     std::string text;
-    std::shared_ptr<MessageReceiver> sender;
+    const User * sender;
 };
 
 
