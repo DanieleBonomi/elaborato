@@ -34,11 +34,12 @@ const std::string &User::getUsername() const {
 }
 
 void User::writeMessage(const std::string &text, int channel) {
+    std::cout<< username << " -> " << text << " in channel " << channel << std::endl;
     Server::getInstance()->getChatAtChannel(channel)->send(text, this);
 
 }
 
 std::unique_ptr<Message> User::onMessageReceived(std::unique_ptr<Message> m) {
-    std::cout<< "USER " << getUsername() <<" <-" <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
+    std::cout<< username <<" <- " <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
     return m;
 }

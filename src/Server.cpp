@@ -41,7 +41,7 @@ Server *Server::getInstance() {
 }
 
 std::unique_ptr<Message> Server::onMessageReceived(std::unique_ptr<Message> m) {
-    std::cout<<"Server <-" <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
+    std::cout<<"Server <- " <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
     return m;
 }
 
