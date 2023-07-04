@@ -38,7 +38,7 @@ public:
     void signToChat(std::string & username, int channel);
     void signAllToChat(int channel);
 
-
+    void printAllChats();
 
 private:
     Server();
@@ -46,9 +46,9 @@ private:
 private:
     int maxChats;
     int usedID;
-    std::map<int,Chat *> chats;
+    std::map<const int,Chat *> chats;
     std::list<User *> users;
-    std::map<int,std::list<Message *>> messageLog;
+    std::map<const int,std::list<Message *>> messageLog; //int represents chat channel
 
     inline static Server * instance = nullptr; // for singleton
 

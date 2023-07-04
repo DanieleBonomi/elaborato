@@ -83,3 +83,14 @@ User *Server::getUserAtUsername(std::string &username) {
     throw std::exception();
 }
 
+void Server::printAllChats() {
+    std::cout<< "Printing messages from all chats:" << std::endl;
+    for (const auto & chatIterator : messageLog){
+        std::cout << "Chat at channel " << chatIterator.first << std::endl;
+        for (const auto & messageIterator : chatIterator.second)
+        {
+            std::cout << messageIterator->getSender()->getUsername() << ": " << messageIterator->getText() << std::endl;
+        }
+    }
+}
+

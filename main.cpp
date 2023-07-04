@@ -26,6 +26,7 @@ int main() {
     tizio->writeMessage("Ciao mondo!",1);
     tizio->writeMessage("Ciao chat privata!",0);
 
+    Server::getInstance()->printAllChats();
 
 
 
