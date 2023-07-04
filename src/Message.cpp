@@ -5,7 +5,7 @@
 #include "../headers/Message.h"
 
 
-Message::Message(const std::string &text, const User * sender) : text(text),sender(sender) {}
+Message::Message(const std::string &text, const User * sender, int channel) : text(text),sender(sender),channel (channel)  {}
 
 const std::string &Message::getText() const {
     return text;
@@ -13,4 +13,8 @@ const std::string &Message::getText() const {
 
 const User * Message::getSender() const {
     return sender;
+}
+
+int Message::getChannel() const {
+    return channel;
 }

@@ -42,6 +42,11 @@ Server *Server::getInstance() {
 
 std::unique_ptr<Message> Server::onMessageReceived(std::unique_ptr<Message> m) {
     std::cout<<"Server <-" <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
+
+    Message * mex = new Message(*m);
+    messageLog[mex->getChannel()].push_back(mex);
+    //mex-> channel will be still stored in messageLog chat even if irrelevant
+
     return m;
 }
 

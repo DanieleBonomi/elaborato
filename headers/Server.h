@@ -48,6 +48,7 @@ private:
     int usedID;
     std::map<int,Chat *> chats;
     std::list<User *> users;
+    std::map<int,std::list<Message *>> messageLog;
 
     inline static Server * instance = nullptr; // for singleton
 

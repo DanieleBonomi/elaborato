@@ -31,6 +31,6 @@ void Chat::send(std::unique_ptr<Message> message) {
 }
 
 void Chat::send(const std::string &text, User * user) {
-    std::unique_ptr<Message> m = std::make_unique<Message>(Message(text,user));
+    std::unique_ptr<Message> m = std::make_unique<Message>(Message(text,user,channel));
     send(std::move(m));
 }

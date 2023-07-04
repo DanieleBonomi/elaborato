@@ -16,11 +16,14 @@ public:
 
     const User * getSender() const;
 
-    Message(const std::string &text, const User * sender);
+    int getChannel() const;
+
+    Message(const std::string &text, const User * sender, int channel);
 
 private:
     std::string text;
     const User * sender;
+    int channel;
 };
 
 
