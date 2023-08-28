@@ -1,18 +1,11 @@
-#find_package(GTest REQUIRED)
+cmake_minimum_required(VERSION 3.23)
 
-set(SOURCE_FILES test1.cpp test1.h)
+project(elaborato)
 
-#target_link_libraries(runAllTests ${GTEST_BOTH_LIBRARIES})
-
-
-# 'Google_test' is the subproject name
-project(Google_tests)
-
-# 'lib' is the folder with Google Test sources
-add_subdirectory(googletest-main)
+add_subdirectory("./lib/googletest-main")
+set(gtest_SOURCE_DIR, "./lib/googletest-main")
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-# 'Google_Tests_run' is the target name
-# 'test1.cpp tests2.cpp' are source files with tests
-add_executable(Google_Tests_run ${SOURCE_FILES})
-target_link_libraries(Google_Tests_run gtest gtest_main)
+set(TEST_SOURCE_FILES test.cpp)
+add_executable(runTest ${TEST_SOURCE_FILES})
+target_link_libraries(runTest gtest gtest_main core)
