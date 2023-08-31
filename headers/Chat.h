@@ -22,8 +22,10 @@ public:
 
     void send(const std::string & text, User * user);
 
+    int getChannel() const;
 
-public:
+
+private:
     int channel;
 };
 

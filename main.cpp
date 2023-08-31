@@ -8,25 +8,26 @@
 
 int main() {
 
-    Server::getInstance()->addChat(0);
-    Server::getInstance()->addChat(1);
+    Server server;
+    server.addChat(0);
+    server.addChat(1);
     std::string t = "Tizio";
     std::string c = "Caio";
     std::string s = "Sempronio";
-    Server::getInstance()->addUser(t); //should I create a std::string and assign it char [] instead?
-    Server::getInstance()->addUser(c);
-    Server::getInstance()->addUser(s);
+    server.addUser(t); //should I create a std::string and assign it char [] instead?
+    server.addUser(c);
+    server.addUser(s);
 
-    Server::getInstance()->signToChat(t, 0);
-    Server::getInstance()->signToChat(c, 0);
-    Server::getInstance()->signAllToChat(1);
+    server.signToChat(t, 0);
+    server.signToChat(c, 0);
+    server.signAllToChat(1);
 
-    User * tizio = Server::getInstance()->getUserAtUsername(t);
+    User * tizio = server.getUserAtUsername(t);
 
     tizio->writeMessage("Ciao mondo!",1);
     tizio->writeMessage("Ciao chat privata!",0);
 
-    Server::getInstance()->printAllChats();
+    server.printAllChats();
 
 
 

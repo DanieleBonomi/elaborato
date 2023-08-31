@@ -17,10 +17,7 @@ class User;
 
 class Server : MessageReceiver {
 public:
-    ~Server() override;
-
-    // for singleton (possibly the whole pattern is pointless)
-    static Server * getInstance();
+    virtual ~Server() override;
 
     //from parent
     virtual std::unique_ptr<Message> onMessageReceived(std::unique_ptr<Message> m) override;
@@ -40,17 +37,15 @@ public:
 
     void printAllChats();
 
-private:
-    Server();
+    explicit Server(int maxChats=10);
 
 private:
     int maxChats;
-    int usedID;
+    int usedID=0;
+
     std::map<const int,Chat *> chats;
     std::list<User *> users;
     std::map<const int,std::list<Message *>> messageLog; //int represents chat channel
-
-    inline static Server * instance = nullptr; // for singleton
 
 };
 

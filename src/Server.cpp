@@ -6,11 +6,6 @@
 #include "../headers/Server.h"
 #include "../headers/Chat.h"
 
-Server::Server() {
-usedID=0;
-maxChats = 10;
-}
-
 void Server::addChat(int channel) {
     if (chats.size() < maxChats) {
         Chat *c = new Chat(channel);
@@ -20,7 +15,16 @@ void Server::addChat(int channel) {
 }
 
 void Server::removeChat(int channel) {
-chats.erase(channel);
+    bool in = false;
+    for (auto el : chats) {
+        if (el.first==channel) {
+            in = true;
+
+        }
+    }
+    if (in) {
+        chats.erase(channel);
+    } else throw std::runtime_error("Attempting to remove chat not present in chats");
 }
 
 Chat * Server::getChatAtChannel(int channel) const{
@@ -33,12 +37,6 @@ int Server::getFreeId() {
     return t;
 }
 
-Server *Server::getInstance() {
-    if (instance==nullptr) {
-        instance = new Server();
-    }
-    return instance;
-}
 
 std::unique_ptr<Message> Server::onMessageReceived(std::unique_ptr<Message> m) {
     std::cout<<"Server <-" <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
@@ -51,12 +49,21 @@ std::unique_ptr<Message> Server::onMessageReceived(std::unique_ptr<Message> m) {
 }
 
 void Server::addUser(std::string &username) {
-    User * u = new User(username);
+    User * u = new User(username,this);
     users.push_back(u);
 }
 
 void Server::removeUser(User *user) {
-    users.remove(user);
+    bool in = false;
+    for (auto el : users) {
+        if (el == user) {
+            in = true;
+        }
+    }
+    if (in)
+    {
+        users.remove(user);
+    } else { throw std::runtime_error("Attempting to remove chat not present in chats");}
 }
 
 Server::~Server() {
@@ -93,4 +100,7 @@ void Server::printAllChats() {
         }
     }
 }
+
+Server::Server(int maxChats) : maxChats(maxChats) {}
+
 

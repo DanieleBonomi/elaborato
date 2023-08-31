@@ -13,7 +13,7 @@
 
 class User : public MessageReceiver {
 public:
-    explicit User(const std::string &username);
+    explicit User(const std::string username, Server* server);
     void openChat(int channel);
     void closeChat(int channel);
     void openChat(Chat *chat);
@@ -29,6 +29,7 @@ public:
 private:
     int id;
     std::string username;
+    Server* server; /*FIXME Dilemma: should server be passed as raw or weak ptr? Ownership is reversed (Server owns Users and Chats) therefore shared_ptr would be absurd*/
 };
 
 
