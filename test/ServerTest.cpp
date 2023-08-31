@@ -6,7 +6,6 @@
 #include "../headers/Server.h"
 #include "../headers/Chat.h"
 #include "../headers/User.h"
-#include "ServerFixture.cpp"
 
 TEST(ServetTest,AvoidSameIDs) {
     Server s;
@@ -38,17 +37,25 @@ TEST(ServerTest,ChatCheck) {
 
     err = false;
     try {
+        s.addChat(1);
+    } catch (...) {
+        err = true;
+    }
+    EXPECT_TRUE(err) << "Chat can be added twice";
+
+    err = false;
+    try {
         s.removeChat(99);
     } catch (...) {
         err = true;
     }
     EXPECT_TRUE(err) << "Chat can be even if outside of chats";
 
+
 }
 
 TEST(ServerTest,UserCheck) {
-    Server server
-    ;
+    Server server;
     std::string t = "Tizio";
     std::string c = "Caio";
     std::string s = "Sempronio";

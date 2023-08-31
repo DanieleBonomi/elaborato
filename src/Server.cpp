@@ -12,6 +12,11 @@ void Server::addChat(int channel) {
         c->subscribe(this);
         chats.insert({channel, c});
     } else std::cout<<"WARNING: chat limit reached"<<std::endl;
+
+    if (messageLog.find(channel) != messageLog.end()) {
+        throw std::runtime_error("Creating chat at same channel (" + std::to_string(channel) + ") twice!");
+    }
+    messageLog[channel].clear(); //used
 }
 
 void Server::removeChat(int channel) {
@@ -69,6 +74,7 @@ void Server::removeUser(User *user) {
 Server::~Server() {
     users.clear();
     chats.clear();
+    messageLog.clear();
 }
 
 void Server::signToChat(std::string &username, int channel) {
@@ -103,4 +109,7 @@ void Server::printAllChats() {
 
 Server::Server(int maxChats) : maxChats(maxChats) {}
 
+std::list<Message *> Server::getMessageFromChat(int channel) const {
+    return messageLog.at(channel);
+}
 

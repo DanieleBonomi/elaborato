@@ -4,19 +4,27 @@
 #include "gtest/gtest.h"
 #include "../headers/Server.h"
 
-class BaseFixture : public ::testing::Test {
+class ServerFixture : public ::testing::Test {
 
 protected:
     Server server;
-    virtual void SetUp(){
+    std::string t = "Tizio";
+    std::string c = "Caio";
+    std::string s = "Sempronio";
+
+    virtual void SetUp() override{
         server.addChat(0);
         server.addChat(1);
-        std::string t = "Tizio";
-        std::string c = "Caio";
-        std::string s = "Sempronio";
-        server.addUser(t); //should I create a std::string and assign it char [] instead?
+        server.addChat(2);
+
+        server.addUser(t);
         server.addUser(c);
         server.addUser(s);
+
+        server.signToChat(t,0);
+        server.signToChat(c,0);
+
+        server.signToChat(t,1);
 
     }
 };

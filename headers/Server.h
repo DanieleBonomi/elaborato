@@ -38,6 +38,7 @@ public:
     void printAllChats();
 
     explicit Server(int maxChats=10);
+    std::list<Message *> getMessageFromChat(int channel) const;
 
 private:
     int maxChats;
@@ -45,6 +46,8 @@ private:
 
     std::map<const int,Chat *> chats;
     std::list<User *> users;
+
+
     std::map<const int,std::list<Message *>> messageLog; //int represents chat channel
 
 };

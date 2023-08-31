@@ -24,7 +24,6 @@ public:
 
     int getChannel() const;
 
-
 private:
     int channel;
 };
