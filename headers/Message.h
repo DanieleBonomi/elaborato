@@ -20,6 +20,7 @@ public:
 
     Message(const std::string &text, const User * sender, int channel);
 
+
 private:
     std::string text;
     const User * sender;

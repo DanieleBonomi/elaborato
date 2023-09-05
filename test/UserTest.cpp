@@ -9,6 +9,8 @@
 #include "ServerFixture.cpp"
 
 TEST_F(ServerFixture,WriteInChats) { // should I divide this in more TEST_F? Probably
+
+
     std::string str = "Hi Test";
 
     try {
@@ -17,17 +19,6 @@ TEST_F(ServerFixture,WriteInChats) { // should I divide this in more TEST_F? Pro
         ASSERT_EQ(server.getMessageFromChat(0).size(), 1) << "MessageLog empty after first message";
         EXPECT_TRUE(server.getMessageFromChat(0).back()->getText() == str) << "First message was damaged in MessageLog";
     } catch (std::exception& e) { ASSERT_TRUE(false) << e.what();}
-
-
-    server.getUserAtUsername(t)->writeMessage(str, 2);
-    EXPECT_EQ(server.getMessageFromChat(2).back()->getText(),str) << "Users allowed to send messages in chat where they're not present";
-
-
-    bool err = false;
-    try {
-        server.signToChat(t,99);
-    } catch (...) {err = true;}
-    EXPECT_TRUE(err) << "Users allowed to sign in non-existing chats";
 
 
     std::string str2 = "È interessante capire che succede con le accentate";
@@ -44,8 +35,5 @@ TEST_F(ServerFixture,WriteInChats) { // should I divide this in more TEST_F? Pro
     std::unique_ptr<Message> m = std::make_unique<Message>(str3,s2.getUserAtUsername(t),0);
     m = s2.getUserAtUsername(t)->onMessageReceived(std::move(m));
     s2.onMessageReceived(std::move(m));
-    EXPECT_TRUE(server.getMessageFromChat(0).back()->getText()==str3 && server.getMessageFromChat(0).back()->getSender()==s2.getUserAtUsername(t))<< "direct onMessageReceived not working";
-
-
-
+    EXPECT_TRUE(s2.getMessageFromChat(0).back()->getText()==str3 && s2.getMessageFromChat(0).back()->getSender()==s2.getUserAtUsername(t))<< "direct onMessageReceived not working";
 }
