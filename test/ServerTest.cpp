@@ -21,7 +21,7 @@ TEST(ServerTest,ChatCheck) {
     s.removeChat(1);
     bool err = false;
     try {
-        s.getChatAtChannel(1);
+        auto chat = s.getChatAtChannel(1);
     } catch (...) {
         err = true;
     }
@@ -67,7 +67,7 @@ TEST(ServerTest,UserCheck) {
     server.removeUser(id1);
     bool err = false;
     try {
-        server.getUserAtId(id1);
+        auto user = server.getUserAtId(id1);
     } catch (...) {
         err = true;
     }
