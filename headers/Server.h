@@ -44,6 +44,10 @@ public:
     [[nodiscard]] bool isVerbose() const;
 
     explicit Server(int maxChats=10, bool verbose = true);
+
+    const Server & operator=(const Server & rigth) = delete; //TODO Here I break the rule of 3
+    Server(const Server & other) = delete;
+
     [[nodiscard]] std::list<Message *> getMessageFromChat(int channel) const;
 
 private:

@@ -34,7 +34,7 @@ TEST_F(ServerFixture,UnicodeTest) {
 }
 TEST(ServerTest,onMessageReceivedTest) {
     //OUTSIDE of Fixture since it messes with directMessageReceived
-    Server server;
+    Server server(10,false);
     std::string t = "Tizio";
     int t_id = server.addUser(t);
     std::string str3 = "Direct onMessageReceived";

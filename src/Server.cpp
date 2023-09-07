@@ -83,6 +83,9 @@ void Server::removeUser(int id) {
 Server::~Server() {
     users.clear();
     chats.clear();
+    for (auto & el: messageLog) {
+        el.second.clear();
+    }
     messageLog.clear();
 }
 
@@ -145,4 +148,5 @@ void Server::setVerbose(bool verbose) {
         el->setVerbose(verbose);
     }
 }
+
 

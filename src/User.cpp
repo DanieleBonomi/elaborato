@@ -36,7 +36,8 @@ const std::string &User::getUsername() const {
 }
 
 void User::writeMessage(const std::string &text, int channel) {
-    std::cout<< username << " -> " << text << " in channel " << channel << std::endl;
+    if (verbose)
+        std::cout<< username << " -> " << text << " in channel " << channel << std::endl;
     server->getChatAtChannel(channel)->send(text, this);
 
 }
