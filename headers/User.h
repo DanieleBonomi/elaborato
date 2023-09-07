@@ -20,9 +20,9 @@ public:
     void closeChat(Chat *chat);
     void writeMessage(const std::string & text, int channel);
 
-    int getId() const;
+    [[nodiscard]] int getId() const;
 
-    const std::string &getUsername() const;
+    [[nodiscard]] const std::string &getUsername() const;
 
     virtual std::unique_ptr<Message> onMessageReceived(std::unique_ptr<Message> message) override;
 

@@ -14,15 +14,15 @@ int main() {
     std::string t = "Tizio";
     std::string c = "Caio";
     std::string s = "Sempronio";
-    server.addUser(t); //should I create a std::string and assign it char [] instead?
-    server.addUser(c);
-    server.addUser(s);
+    int id1 = server.addUser(t); //should I create a std::string and assign it char [] instead?
+    int id2 = server.addUser(c);
+    int id3 = server.addUser(s);
 
-    server.signToChat(t, 0);
-    server.signToChat(c, 0);
+    server.signToChat(id1, 0);
+    server.signToChat(id2, 0);
     server.signAllToChat(1);
 
-    User * tizio = server.getUserAtUsername(t);
+    User * tizio = server.getUserAtId(id1);
 
     tizio->writeMessage("Ciao mondo!",1);
     tizio->writeMessage("Ciao chat privata!",0);

@@ -12,11 +12,11 @@ class User;
 
 class Message {
 public:
-    const std::string &getText() const;
+    [[nodiscard]] const std::string &getText() const;
 
-    const User * getSender() const;
+    [[nodiscard]] const User * getSender() const;
 
-    int getChannel() const;
+    [[nodiscard]] int getChannel() const;
 
     Message(const std::string &text, const User * sender, int channel);
 

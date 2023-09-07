@@ -8,22 +8,25 @@ class ServerFixture : public ::testing::Test {
 
 protected:
     Server server;
-    std::string t = "Tizio";
-    std::string c = "Caio";
-    std::string s = "Sempronio";
 
+    int t_id,c_id,s_id;
     void SetUp() override{
+
+            std::string t = "Tizio";
+            std::string c = "Caio";
+            std::string s = "Sempronio";
+
             server.addChat(0);
             server.addChat(1);
             server.addChat(2);
 
-            server.addUser(t);
-            server.addUser(c);
-            server.addUser(s);
+            t_id = server.addUser(t);
+            c_id = server.addUser(c);
+            s_id = server.addUser(s);
 
-            server.signToChat(t, 0);
-            server.signToChat(c, 0);
+            server.signToChat(t_id, 0);
+            server.signToChat(c_id, 0);
 
-            server.signToChat(t, 1);
+            server.signToChat(t_id, 1);
     }
 };

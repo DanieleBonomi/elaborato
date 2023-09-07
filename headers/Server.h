@@ -26,19 +26,21 @@ public:
 
 
     //brand new
-    Chat * getChatAtChannel(int channel) const;
-    User * getUserAtUsername(std::string & username);
-    int getFreeId();
-    void addUser(std::string &username); //only called by user c'tor
-    void removeUser(User * user);
+    [[nodiscard]] Chat * getChatAtChannel(int channel) const;
+    [[nodiscard]] User * getUserAtUsername(const std::string & username) const;
+    User * getUserAtId(int id) const;
 
-    void signToChat(std::string & username, int channel);
+    int getFreeId();
+    int addUser(std::string &username); //only called by user c'tor
+    void removeUser(int id);
+
+    void signToChat(int id, int channel);
     void signAllToChat(int channel);
 
     void printAllChats();
 
     explicit Server(int maxChats=10);
-    std::list<Message *> getMessageFromChat(int channel) const;
+    [[nodiscard]] std::list<Message *> getMessageFromChat(int channel) const;
 
 private:
     int maxChats;

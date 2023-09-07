@@ -46,29 +46,37 @@ int Server::getFreeId() {
 std::unique_ptr<Message> Server::onMessageReceived(std::unique_ptr<Message> m) {
     std::cout<<"Server <-" <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
 
-    Message * mex = new Message(*m);
+    auto * mex = new Message(*m);
     messageLog[mex->getChannel()].push_back(mex);
     //mex-> channel will be still stored in messageLog chat even if irrelevant
 
     return m;
 }
 
-void Server::addUser(std::string &username) {
+int Server::addUser(std::string &username) {
+    for (const auto & el: users) {
+        if (el->getUsername()==username)
+            throw std::runtime_error("User with name: " + username + " already in users");
+    }
     User * u = new User(username,this);
     users.push_back(u);
+    return u->getId();
 }
 
-void Server::removeUser(User *user) {
-    bool in = false;
-    for (auto el : users) {
-        if (el == user) {
-            in = true;
+void Server::removeUser(int id) {
+
+    bool found = false;
+    for (const auto & el: users) {
+        if (el->getId()==id)
+        {
+            users.remove(el);
+            found=true;
+            break;
         }
     }
-    if (in)
-    {
-        users.remove(user);
-    } else { throw std::runtime_error("Attempting to remove chat not present in chats");}
+    if (!found)
+        throw (std::runtime_error("User can't be removed because there's no user at id"));
+
 }
 
 Server::~Server() {
@@ -77,8 +85,8 @@ Server::~Server() {
     messageLog.clear();
 }
 
-void Server::signToChat(std::string &username, int channel) {
-    chats[channel]->subscribe(getUserAtUsername(username)); //TODO fix multiple username being considered as same User (in the whole project)
+void Server::signToChat(int id, int channel) {
+    chats[channel]->subscribe(getUserAtId(id));
 }
 
 void Server::signAllToChat(int channel) {
@@ -87,14 +95,25 @@ void Server::signAllToChat(int channel) {
         c->subscribe(user);
 }
 
-User *Server::getUserAtUsername(std::string &username) {
+User *Server::getUserAtUsername(const std::string &username) const {
     for (auto user : users) {
         if (user->getUsername() == username) {
             return user;
         }
     }
-    throw std::exception();
+    throw std::runtime_error("No user at username");
 }
+
+
+User * Server::getUserAtId(int id) const {
+    for (auto user : users) {
+        if (user->getId() == id) {
+            return user;
+        }
+    }
+    throw std::runtime_error("No user at id");
+}
+
 
 void Server::printAllChats() {
     std::cout<< "Printing messages from all chats:" << std::endl;

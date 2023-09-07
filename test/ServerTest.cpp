@@ -7,7 +7,7 @@
 #include "../headers/Chat.h"
 #include "../headers/User.h"
 
-TEST(ServetTest,AvoidSameIDs) {
+TEST(ServerTest,AvoidSameIDs) {
     Server s;
     EXPECT_TRUE(s.getFreeId()!=s.getFreeId()) << "SAME ID given by server";
 }
@@ -59,15 +59,15 @@ TEST(ServerTest,UserCheck) {
     std::string t = "Tizio";
     std::string c = "Caio";
     std::string s = "Sempronio";
-    server.addUser(t);
-    server.addUser(c);
-    EXPECT_EQ(server.getUserAtUsername(t)->getUsername(),t) << "User at username doesn't have correct username";
-    EXPECT_EQ(server.getUserAtUsername(c)->getUsername(),c) << "User at username doesn't have correct username";
+    int id1 = server.addUser(t);
+    int id2 = server.addUser(c);
+    EXPECT_EQ(server.getUserAtId(id1)->getUsername(),t) << "User at username doesn't have correct username";
+    EXPECT_EQ(server.getUserAtId(id2)->getUsername(),c) << "User at username doesn't have correct username";
 
-    server.removeUser(server.getUserAtUsername(t));
+    server.removeUser(id1);
     bool err = false;
     try {
-        server.getUserAtUsername(t);
+        server.getUserAtId(id1);
     } catch (...) {
         err = true;
     }
@@ -75,7 +75,7 @@ TEST(ServerTest,UserCheck) {
 
     err = false;
     try {
-        server.removeUser(server.getUserAtUsername(t));
+        server.removeUser(id1);
     } catch (...) {
         err = true;
     }
@@ -83,10 +83,19 @@ TEST(ServerTest,UserCheck) {
 
     err = false;
     try {
-        server.removeUser(server.getUserAtUsername(s));
+        server.addUser(t);
+        server.addUser(t);
+    } catch (std::runtime_error & e) {
+        err = true;
+    }
+    EXPECT_TRUE(err) << "User can be added twice to the same server";
+
+    err = false;
+    try {
+        server.removeUser(id1);
     } catch (...) {
         err = true;
     }
-    EXPECT_TRUE(err) << "User can be even if outside of users";
+    EXPECT_TRUE(err) << "User can removed be even if outside of users";
 
 }
