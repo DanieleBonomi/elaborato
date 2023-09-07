@@ -42,9 +42,10 @@ int Server::getFreeId() {
     return t;
 }
 
-
 std::unique_ptr<Message> Server::onMessageReceived(std::unique_ptr<Message> m) {
-    std::cout<<"Server <-" <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
+    if (verbose) {
+        std::cout << "Server <-" << m->getSender()->getUsername() << ": " << m->getText() << std::endl;
+    }
 
     auto * mex = new Message(*m);
     messageLog[mex->getChannel()].push_back(mex);
@@ -85,6 +86,8 @@ Server::~Server() {
     messageLog.clear();
 }
 
+
+
 void Server::signToChat(int id, int channel) {
     chats[channel]->subscribe(getUserAtId(id));
 }
@@ -104,7 +107,6 @@ User *Server::getUserAtUsername(const std::string &username) const {
     throw std::runtime_error("No user at username");
 }
 
-
 User * Server::getUserAtId(int id) const {
     for (auto user : users) {
         if (user->getId() == id) {
@@ -114,21 +116,33 @@ User * Server::getUserAtId(int id) const {
     throw std::runtime_error("No user at id");
 }
 
-
 void Server::printAllChats() {
-    std::cout<< "Printing messages from all chats:" << std::endl;
-    for (const auto & chatIterator : messageLog){
-        std::cout << "Chat at channel " << chatIterator.first << std::endl;
-        for (const auto & messageIterator : chatIterator.second)
-        {
-            std::cout << messageIterator->getSender()->getUsername() << ": " << messageIterator->getText() << std::endl;
+    if (verbose) {
+        std::cout << "Printing messages from all chats:" << std::endl;
+        for (const auto &chatIterator: messageLog) {
+            std::cout << "Chat at channel " << chatIterator.first << std::endl;
+            for (const auto &messageIterator: chatIterator.second) {
+                std::cout << messageIterator->getSender()->getUsername() << ": " << messageIterator->getText()
+                          << std::endl;
+            }
         }
     }
 }
 
-Server::Server(int maxChats) : maxChats(maxChats) {}
+Server::Server(int maxChats, bool verbose) : maxChats(maxChats), verbose(verbose) {}
 
 std::list<Message *> Server::getMessageFromChat(int channel) const {
     return messageLog.at(channel);
+}
+
+bool Server::isVerbose() const {
+    return verbose;
+}
+
+void Server::setVerbose(bool verbose) {
+    Server::verbose = verbose;
+    for (auto el: users) {
+        el->setVerbose(verbose);
+    }
 }
 

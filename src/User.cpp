@@ -9,6 +9,7 @@
 
 User::User(const std::string username, Server* server) : username(username), server(server){
     id = server->getFreeId();
+    verbose = server->isVerbose();
 }
 
 void User::openChat(int channel) {
@@ -41,6 +42,16 @@ void User::writeMessage(const std::string &text, int channel) {
 }
 
 std::unique_ptr<Message> User::onMessageReceived(std::unique_ptr<Message> m) { //FIXME message might be better as share_ptr, instead of being passed around
-    std::cout<< username <<" <- " <<m->getSender()->getUsername() << ": " <<m->getText()<< std::endl;
+    if (verbose) {
+        std::cout << username << " <- " << m->getSender()->getUsername() << ": " << m->getText() << std::endl;
+    }
     return m;
+}
+
+bool User::isVerbose() const {
+    return verbose;
+}
+
+void User::setVerbose(bool verbose) {
+    User::verbose = verbose;
 }

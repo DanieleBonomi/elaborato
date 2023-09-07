@@ -11,7 +11,7 @@ protected:
 
     int t_id,c_id,s_id;
     void SetUp() override{
-
+            server = Server(10,false);
             std::string t = "Tizio";
             std::string c = "Caio";
             std::string s = "Sempronio";

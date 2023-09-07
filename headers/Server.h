@@ -39,12 +39,17 @@ public:
 
     void printAllChats();
 
-    explicit Server(int maxChats=10);
+    void setVerbose(bool verbose);
+
+    [[nodiscard]] bool isVerbose() const;
+
+    explicit Server(int maxChats=10, bool verbose = true);
     [[nodiscard]] std::list<Message *> getMessageFromChat(int channel) const;
 
 private:
     int maxChats;
     int usedID=0;
+    bool verbose;
 
     std::map<const int,Chat *> chats;
     std::list<User *> users;
