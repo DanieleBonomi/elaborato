@@ -42,9 +42,9 @@ void User::writeMessage(const std::string &text, int channel) {
 
 }
 
-void User::onMessageReceived(std::shared_ptr<Message> m) { //DONE message might be better as shared_ptr, instead of being passed around
+void User::onMessageReceived(const Message &m) {
     if (verbose) {
-        std::cout << username << " <- " << m->getSender()->getUsername() << ": " << m->getText() << std::endl;
+        std::cout << username << " <- " << m.getSender()->getUsername() << ": " << m.getText() << std::endl;
     }
 }
 

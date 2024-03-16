@@ -12,7 +12,7 @@ class MessageReceiver {
 public:
     virtual ~MessageReceiver();
     MessageReceiver() = default;
-    virtual void onMessageReceived(std::shared_ptr<Message> m) =0;
+    virtual void onMessageReceived(const Message &m) =0;
 };
 
 
