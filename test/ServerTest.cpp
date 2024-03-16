@@ -18,6 +18,8 @@ TEST(ServerTest,ChatCheck) {
     s.addChat(2);
     EXPECT_EQ(s.getChatAtChannel(1)->getChannel(),1) << "Chat at channel doesn't have correct channel";
     EXPECT_EQ(s.getChatAtChannel(2)->getChannel(),2) << "Chat at channel doesn't have correct channel";
+
+
     s.removeChat(1);
     bool err = false;
     try {
@@ -51,6 +53,7 @@ TEST(ServerTest,ChatCheck) {
     }
     EXPECT_TRUE(err) << "Chat can be even if outside of chats";
 
+    //FIXME Expect_true-> expect_throw
 
 }
 

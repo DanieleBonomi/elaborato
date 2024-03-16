@@ -25,7 +25,6 @@ void Chat::unsubscribe(MessageReceiver *user) {
 
 void Chat::send(std::unique_ptr<Message> message) {
     // check if user is in chat
-
     if (std::find(receivers.begin(), receivers.end(),message->getSender())!=receivers.end()) {
         for (auto item: receivers) {
             message = item->onMessageReceived(std::move(message));

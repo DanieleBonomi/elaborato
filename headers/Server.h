@@ -45,7 +45,7 @@ public:
 
     explicit Server(int maxChats=10, bool verbose = true);
 
-    const Server & operator=(const Server & rigth) = delete; //TODO Here I break the rule of 3
+    const Server & operator=(const Server & rigth) = delete; //FIXME Here I break the rule of 3
     Server(const Server & other) = delete;
 
     [[nodiscard]] std::list<Message *> getMessageFromChat(int channel) const;
@@ -60,7 +60,7 @@ private:
 
 
     std::map<const int,std::list<Message *>> messageLog; //int represents chat channel
-
+//FIXME togliere [[nodiscard]],  aggiungere unreadMessages (server-side, int), unique_ptr in messageLog and pass by value in onMessageReceived
 };
 
 

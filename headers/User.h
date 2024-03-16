@@ -36,7 +36,7 @@ public:
     void setVerbose(bool verbose);
 
 private:
-    Server* server; /*FIXME Dilemma: should server be passed as raw or weak ptr? Ownership is reversed (Server owns Users and Chats) therefore shared_ptr would be absurd*/
+    Server* server;
 };
 
 

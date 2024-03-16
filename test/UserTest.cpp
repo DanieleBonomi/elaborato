@@ -13,12 +13,10 @@ TEST_F(ServerFixture,BasicWriteTest) {
 
     std::string str = "Hi Test";
 
-    try {
-        ASSERT_EQ(server.getMessageFromChat(0).size(), 0) << "MessageLog isn't empty before first message";
-        server.getUserAtId(t_id)->writeMessage(str, 0);
-        ASSERT_EQ(server.getMessageFromChat(0).size(), 1) << "MessageLog empty after first message";
-        EXPECT_TRUE(server.getMessageFromChat(0).back()->getText() == str) << "First message was damaged in MessageLog";
-    } catch (std::exception &e) { ASSERT_TRUE(false) << e.what(); }
+    ASSERT_EQ(server.getMessageFromChat(0).size(), 0) << "MessageLog isn't empty before first message";
+    server.getUserAtId(t_id)->writeMessage(str, 0);
+    ASSERT_EQ(server.getMessageFromChat(0).size(), 1) << "MessageLog empty after first message";
+    EXPECT_TRUE(server.getMessageFromChat(0).back()->getText() == str) << "First message was damaged in MessageLog";
 
 }
 TEST_F(ServerFixture,UnicodeTest) {

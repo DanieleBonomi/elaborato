@@ -42,7 +42,7 @@ void User::writeMessage(const std::string &text, int channel) {
 
 }
 
-std::unique_ptr<Message> User::onMessageReceived(std::unique_ptr<Message> m) { //FIXME message might be better as share_ptr, instead of being passed around
+std::unique_ptr<Message> User::onMessageReceived(std::unique_ptr<Message> m) { //FIXME message might be better as shared_ptr, instead of being passed around
     if (verbose) {
         std::cout << username << " <- " << m->getSender()->getUsername() << ": " << m->getText() << std::endl;
     }
