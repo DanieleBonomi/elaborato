@@ -22,9 +22,8 @@ TEST_F(ServerFixture,BasicWriteTest) {
 TEST_F(ServerFixture,UnicodeTest) {
 
     std::string str2 = "È interessante capire che succede con le accentate";
-    try {
-        server.getUserAtId(t_id)->writeMessage(str2, 0);
-    } catch (std::exception &e) { ASSERT_TRUE(false) << "Unicode messages cause error" << e.what(); }
+
+    EXPECT_NO_THROW(server.getUserAtId(t_id)->writeMessage(str2, 0))<< "Unicode messages cause error";
 
     EXPECT_TRUE(server.getMessageFromChat(0).back().getText() == str2 &&
                 server.getMessageFromChat(0).back().getSender() == server.getUserAtId(t_id))
