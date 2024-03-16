@@ -7,7 +7,3 @@
 MessageReceiver::~MessageReceiver() {
 
 }
-
-std::unique_ptr<Message> MessageReceiver::onMessageReceived(std::unique_ptr<Message> m) {
-    return m;
-}

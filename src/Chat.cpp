@@ -23,18 +23,18 @@ void Chat::unsubscribe(MessageReceiver *user) {
     }
 }
 
-void Chat::send(std::unique_ptr<Message> message) {
+void Chat::send(std::shared_ptr<Message> message) {
     // check if user is in chat
-    if (std::find(receivers.begin(), receivers.end(),message->getSender())!=receivers.end()) {
+    if (std::find(receivers.begin(), receivers.end(), message->getSender())!=receivers.end()) { //sends message back to sender as well. Could be useful for checking if message failed
         for (auto item: receivers) {
-            message = item->onMessageReceived(std::move(message));
+            item->onMessageReceived(message);
         }
     }
 }
 
 void Chat::send(const std::string &text, User * user) {
-    std::unique_ptr<Message> m = std::make_unique<Message>(Message(text,user,channel));
-    send(std::move(m));
+    std::shared_ptr<Message> m = std::make_shared<Message>(Message(text,user,channel));
+    send(m);
 }
 
 int Chat::getChannel() const {

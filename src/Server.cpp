@@ -42,7 +42,7 @@ int Server::getFreeId() {
     return t;
 }
 
-std::unique_ptr<Message> Server::onMessageReceived(std::unique_ptr<Message> m) {
+void Server::onMessageReceived(std::shared_ptr<Message> m) {
     if (verbose) {
         std::cout << "Server <-" << m->getSender()->getUsername() << ": " << m->getText() << std::endl;
     }
@@ -51,7 +51,6 @@ std::unique_ptr<Message> Server::onMessageReceived(std::unique_ptr<Message> m) {
     messageLog[mex->getChannel()].push_back(mex);
     //mex-> channel will be still stored in messageLog chat even if irrelevant
 
-    return m;
 }
 
 int Server::addUser(std::string &username) {

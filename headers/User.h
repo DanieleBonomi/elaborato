@@ -24,7 +24,7 @@ public:
 
     [[nodiscard]] const std::string &getUsername() const;
 
-    virtual std::unique_ptr<Message> onMessageReceived(std::unique_ptr<Message> message) override;
+    virtual void onMessageReceived(std::shared_ptr<Message> m) override;
 
 private:
     int id;

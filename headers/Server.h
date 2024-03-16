@@ -20,14 +20,14 @@ public:
     virtual ~Server() override;
 
     //from parent
-    virtual std::unique_ptr<Message> onMessageReceived(std::unique_ptr<Message> m) override;
+    virtual void onMessageReceived(std::shared_ptr<Message> m) override;
     void addChat(int channel);
     void removeChat(int channel);
 
 
     //brand new
-    [[nodiscard]] Chat * getChatAtChannel(int channel) const;
-    [[nodiscard]] User * getUserAtUsername(const std::string & username) const;
+    Chat * getChatAtChannel(int channel) const;
+    User * getUserAtUsername(const std::string & username) const;
     User * getUserAtId(int id) const;
 
     int getFreeId();
@@ -41,14 +41,14 @@ public:
 
     void setVerbose(bool verbose);
 
-    [[nodiscard]] bool isVerbose() const;
+    bool isVerbose() const;
 
     explicit Server(int maxChats=10, bool verbose = true);
 
     const Server & operator=(const Server & rigth) = delete; //FIXME Here I break the rule of 3
     Server(const Server & other) = delete;
 
-    [[nodiscard]] std::list<Message *> getMessageFromChat(int channel) const;
+    std::list<Message *> getMessageFromChat(int channel) const;
 
 private:
     int maxChats;

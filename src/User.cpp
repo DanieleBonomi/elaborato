@@ -42,11 +42,10 @@ void User::writeMessage(const std::string &text, int channel) {
 
 }
 
-std::unique_ptr<Message> User::onMessageReceived(std::unique_ptr<Message> m) { //FIXME message might be better as shared_ptr, instead of being passed around
+void User::onMessageReceived(std::shared_ptr<Message> m) { //DONE message might be better as shared_ptr, instead of being passed around
     if (verbose) {
         std::cout << username << " <- " << m->getSender()->getUsername() << ": " << m->getText() << std::endl;
     }
-    return m;
 }
 
 bool User::isVerbose() const {

@@ -36,9 +36,9 @@ TEST(ServerTest,onMessageReceivedTest) {
     std::string t = "Tizio";
     int t_id = server.addUser(t);
     std::string str3 = "Direct onMessageReceived";
-    std::unique_ptr<Message> m = std::make_unique<Message>(str3,server.getUserAtId(t_id),0);
-    m = server.getUserAtId(t_id)->onMessageReceived(std::move(m));
-    server.onMessageReceived(std::move(m));
+    std::shared_ptr<Message> m = std::make_shared<Message>(str3,server.getUserAtId(t_id),0);
+    server.getUserAtId(t_id)->onMessageReceived(m);
+    server.onMessageReceived(m);
     EXPECT_TRUE(server.getMessageFromChat(0).back()->getText()==str3 && server.getMessageFromChat(0).back()->getSender()==server.getUserAtId(t_id))<< "direct onMessageReceived not working";
 
 }

@@ -17,7 +17,7 @@ class MessageSender {
 public:
     virtual ~MessageSender() = default; // this d'tor mustn't free the memory of the pointed receivers, because they will be needed later
 
-    virtual void send(std::unique_ptr<Message> m) = 0;
+    virtual void send(std::shared_ptr<Message> m) = 0;
     virtual void subscribe(MessageReceiver *user) = 0;
     virtual void unsubscribe(MessageReceiver *user) = 0;
 
