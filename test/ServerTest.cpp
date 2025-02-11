@@ -29,31 +29,12 @@ TEST(ServerTest,ChatCheck) {
     }
     EXPECT_TRUE(err) << "Chat still in server list after being removed";
 
-    err = false;
-    try {
-        s.removeChat(1);
-    } catch (...) {
-        err = true;
-    }
-    EXPECT_TRUE(err) << "Chat can be removed twice";
+    EXPECT_THROW(s.removeChat(1),std::runtime_error) << "Chat can be removed twice";
 
-    err = false;
-    try {
-        s.addChat(1);
-    } catch (...) {
-        err = true;
-    }
-    EXPECT_TRUE(err) << "Chat can be added twice";
+    EXPECT_THROW(s.addChat(1),std::runtime_error) << "Chat can be added twice";
 
-    err = false;
-    try {
-        s.removeChat(99);
-    } catch (...) {
-        err = true;
-    }
-    EXPECT_TRUE(err) << "Chat can be even if outside of chats";
+    EXPECT_THROW(s.removeChat(99),std::runtime_error) << "Chat can be even if outside of chats";
 
-    //FIXME Expect_true-> expect_throw
 
 }
 
