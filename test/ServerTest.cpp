@@ -49,37 +49,14 @@ TEST(ServerTest,UserCheck) {
     EXPECT_EQ(server.getUserAtId(id2)->getUsername(),c) << "User at username doesn't have correct username";
 
     server.removeUser(id1);
-    bool err = false;
-    try {
-        auto user = server.getUserAtId(id1);
-    } catch (...) {
-        err = true;
-    }
-    EXPECT_TRUE(err) << "User still in server list after being removed";
 
-    err = false;
-    try {
-        server.removeUser(id1);
-    } catch (...) {
-        err = true;
-    }
-    EXPECT_TRUE(err) << "User can be removed twice";
+    EXPECT_THROW(server.getUserAtId(id1);,std::runtime_error) << "User still in server list after being removed";
 
-    err = false;
-    try {
-        server.addUser(t);
-        server.addUser(t);
-    } catch (std::runtime_error & e) {
-        err = true;
-    }
-    EXPECT_TRUE(err) << "User can be added twice to the same server";
+    EXPECT_THROW(server.removeUser(id1);, std::runtime_error)  << "User can be removed twice";
 
-    err = false;
-    try {
-        server.removeUser(id1);
-    } catch (...) {
-        err = true;
-    }
-    EXPECT_TRUE(err) << "User can removed be even if outside of users";
+    EXPECT_THROW({ server.addUser(t);
+                     server.addUser(t);} ,std::runtime_error) << "User can be added twice to the same server";
+
+    EXPECT_THROW(server.removeUser(id1);,std::runtime_error) << "User can removed be even if outside of users";
 
 }

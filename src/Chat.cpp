@@ -29,7 +29,7 @@ void Chat::send(std::shared_ptr<Message> message) {
         for (auto item: receivers) {
             item->onMessageReceived(message);
         }
-    }
+    } else {throw std::runtime_error("Message sent in chat by user outside chat"); }
 }
 
 void Chat::send(const std::string &text, User * user) {
