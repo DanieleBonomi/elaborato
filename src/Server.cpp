@@ -24,7 +24,7 @@ void Server::removeChat(int channel) {
     for (auto el : chats) {
         if (el.first==channel) {
             in = true;
-
+            break;
         }
     }
     if (in) {

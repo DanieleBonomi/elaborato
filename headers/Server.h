@@ -60,7 +60,7 @@ private:
 
 
     std::map<const int,std::list<Message *>> messageLog; //int represents chat channel
-//DONE togliere [[nodiscard]],
+//DONE togliere [[nodiscard]], implementare EXPECT_THROW
 // FIXME aggiungere unreadMessages (server-side, int), unique_ptr in messageLog and pass by value in onMessageReceived
 };
 
