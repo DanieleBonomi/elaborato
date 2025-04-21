@@ -20,11 +20,11 @@ public:
     void closeChat(Chat *chat);
     void writeMessage(const std::string & text, int channel);
 
-     int getId() const;
+    int getId() const;
 
-     const std::string &getUsername() const;
+    const std::string &getUsername() const;
 
-    virtual void onMessageReceived(std::shared_ptr<Message> m) override;
+    virtual void onMessageReceived(const Message &m) override;
 
 private:
     int id;

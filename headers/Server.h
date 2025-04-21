@@ -20,7 +20,7 @@ public:
     virtual ~Server() override;
 
     //from parent
-    virtual void onMessageReceived(std::shared_ptr<Message> m) override;
+    virtual void onMessageReceived(const Message &m) override;
     void addChat(int channel);
     void removeChat(int channel);
 
@@ -48,7 +48,7 @@ public:
     const Server & operator=(const Server & rigth) = delete; //FIXME Here I break the rule of 3
     Server(const Server & other) = delete;
 
-    std::list<Message *> getMessageFromChat(int channel) const;
+    std::list<Message> getMessageFromChat(int channel) const;
 
 private:
     int maxChats;
@@ -59,9 +59,10 @@ private:
     std::list<User *> users;
 
 
-    std::map<const int,std::list<Message *>> messageLog; //int represents chat channel
-//DONE togliere [[nodiscard]], implementare EXPECT_THROW
-// FIXME aggiungere unreadMessages (server-side, int), unique_ptr in messageLog and pass by value in onMessageReceived
+    std::map<const int,std::list<Message>> messageLog; //int represents chat channel
+//FIXME aggiungere unreadMessages (server-side, int)
+//DONE togliere [[nodiscard]] , unique_ptr in messageLog and pass by value in onMessageReceived
+
 };
 
 

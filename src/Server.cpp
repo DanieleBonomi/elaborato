@@ -42,14 +42,14 @@ int Server::getFreeId() {
     return t;
 }
 
-void Server::onMessageReceived(std::shared_ptr<Message> m) {
+void Server::onMessageReceived(const Message &m) {
     if (verbose) {
-        std::cout << "Server <-" << m->getSender()->getUsername() << ": " << m->getText() << std::endl;
+        std::cout << "Server <-" << m.getSender()->getUsername() << ": " << m.getText() << std::endl;
     }
 
-    auto * mex = new Message(*m);
-    messageLog[mex->getChannel()].push_back(mex);
-    //mex-> channel will be still stored in messageLog chat even if irrelevant
+    auto mex = Message(m);
+    messageLog[mex.getChannel()].push_back(mex);
+    //mex.channel will be still stored in messageLog chat even if irrelevant
 
 }
 
@@ -124,7 +124,7 @@ void Server::printAllChats() {
         for (const auto &chatIterator: messageLog) {
             std::cout << "Chat at channel " << chatIterator.first << std::endl;
             for (const auto &messageIterator: chatIterator.second) {
-                std::cout << messageIterator->getSender()->getUsername() << ": " << messageIterator->getText()
+                std::cout << messageIterator.getSender()->getUsername() << ": " << messageIterator.getText()
                           << std::endl;
             }
         }
@@ -133,7 +133,7 @@ void Server::printAllChats() {
 
 Server::Server(int maxChats, bool verbose) : maxChats(maxChats), verbose(verbose) {}
 
-std::list<Message *> Server::getMessageFromChat(int channel) const {
+std::list<Message> Server::getMessageFromChat(int channel) const {
     return messageLog.at(channel);
 }
 
