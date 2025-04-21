@@ -9,14 +9,12 @@
 #include "ServerFixture.cpp"
 
 TEST_F(ServerFixture,BasicWriteTest) {
-
-
     std::string str = "Hi Test";
 
     ASSERT_EQ(server.getMessageFromChat(0).size(), 0) << "MessageLog isn't empty before first message";
     server.getUserAtId(t_id)->writeMessage(str, 0);
     ASSERT_EQ(server.getMessageFromChat(0).size(), 1) << "MessageLog empty after first message";
-    EXPECT_TRUE(server.getMessageFromChat(0).back()->getText() == str) << "First message was damaged in MessageLog";
+    EXPECT_TRUE(server.getMessageFromChat(0).back()->getText() == str) << "First message text was damaged in MessageLog";
 
 }
 TEST_F(ServerFixture,UnicodeTest) {
@@ -29,6 +27,21 @@ TEST_F(ServerFixture,UnicodeTest) {
                 server.getMessageFromChat(0).back()->getSender() == server.getUserAtId(t_id))
                         << "Message with unicode was damaged";
 }
+TEST_F(ServerFixture,ReadTest) {
+    std::string str1 = "Hello";
+    server.getUserAtId(t_id)->writeMessage(str1,0);
+    auto messageList = server.getMessageFromChat(0);
+    EXPECT_TRUE(messageList.back()->hasRead(server.getUserAtId(t_id)))
+        << "User who wrote the message didn't read it";
+    EXPECT_FALSE(messageList.back()->hasRead(server.getUserAtId(c_id)))
+        << "User who never read the message is flagged as read=true";
+    EXPECT_THROW(messageList.back()->hasRead(server.getUserAtId(s_id)),std::runtime_error)
+        << "Asking if user who never received the message has read it doesn't give an error";
+    server.getUserAtId(c_id)->readAll();
+    EXPECT_TRUE(messageList.back()->hasRead(server.getUserAtId(c_id)))
+        << "User who read the message is flagged as read=false";
+}
+
 TEST(ServerTest,onMessageReceivedTest) {
     //OUTSIDE of Fixture since it messes with directMessageReceived
     Server server(10,false);

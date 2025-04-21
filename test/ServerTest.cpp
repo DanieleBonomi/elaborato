@@ -50,13 +50,15 @@ TEST(ServerTest,UserCheck) {
 
     server.removeUser(id1);
 
-    EXPECT_THROW(server.getUserAtId(id1);,std::runtime_error) << "User still in server list after being removed";
+    EXPECT_THROW(server.getUserAtId(id1);,std::runtime_error)
+        << "User still in server list after being removed";
 
-    EXPECT_THROW(server.removeUser(id1);, std::runtime_error)  << "User can be removed twice";
+    EXPECT_THROW(server.removeUser(id1);, std::runtime_error)
+        << "User can be removed twice";
 
-    EXPECT_THROW({ server.addUser(t);
-                     server.addUser(t);} ,std::runtime_error) << "User can be added twice to the same server";
+    EXPECT_THROW({ server.addUser(t); server.addUser(t);} ,std::runtime_error)
+        << "User can be added twice to the same server";
 
-    EXPECT_THROW(server.removeUser(id1);,std::runtime_error) << "User can removed be even if outside of users";
-
+    EXPECT_THROW(server.removeUser(id1);,std::runtime_error)
+        << "User can removed be even if outside of users";
 }

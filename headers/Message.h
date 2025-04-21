@@ -28,6 +28,8 @@ public:
 
     void setRead(const MessageReceiver * user);
 
+    bool hasRead(const MessageReceiver * user) const;
+
 
 
 private:

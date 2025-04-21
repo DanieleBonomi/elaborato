@@ -33,3 +33,10 @@ void Message::setRead(const MessageReceiver *user) {
         throw std::runtime_error("Message set as read by user who never received it");
     }
 }
+
+bool Message::hasRead(const MessageReceiver * user) const {
+    if (read.count(user)) { // if user in read keys
+        return read.at(user); // at is const but map.operator[] isn't
+    }
+    throw std::runtime_error("Checking read for user who never received the message");
+}
