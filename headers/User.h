@@ -30,11 +30,10 @@ private:
     int id;
     std::string username;
     bool verbose;
-    std::list<std::shared_ptr<Message>> unreadMessages; // using normal pointers because we can't use references in list
-    // (no need to call destructor because the memory is managed by the server)
+    std::list<std::shared_ptr<Message>> unreadMessages;
+
 public:
     bool isVerbose() const;
-
     void setVerbose(bool verbose);
 
     void readAll();

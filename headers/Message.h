@@ -37,6 +37,9 @@ private:
     const User * sender;
     int channel;
     std::map<const MessageReceiver *,bool> read; // user id, read
+public:
+    static int idCount;
+    const int id;
 };
 
 

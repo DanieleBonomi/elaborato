@@ -38,6 +38,8 @@ TEST(ServerTest,ChatCheck) {
 
 }
 
+
+
 TEST(ServerTest,UserCheck) {
     Server server;
     std::string t = "Tizio";
@@ -61,4 +63,23 @@ TEST(ServerTest,UserCheck) {
 
     EXPECT_THROW(server.removeUser(id1);,std::runtime_error)
         << "User can removed be even if outside of users";
+}
+#include "ServerFixture.cpp"
+
+TEST_F(ServerFixture,AvoidSameMessageId) {
+    const int totCount = 10;
+    auto user = server.getUserAtId(t_id);
+    for (int i=0; i<totCount; i++) {
+        user->writeMessage("MEX " + std::to_string(i),0);
+    }
+    auto messages = server.getMessageFromChat(0);
+
+    for (auto i=messages.begin(); i!=std::prev(messages.end()); i++) {
+
+        for (auto j=std::next(i); j!=messages.end(); j++) {
+            EXPECT_FALSE((*i)->id == (*j)->id)
+                << " found 2 messages with the same id";
+            // i is iterator<std::shared_ptr<Message>> so two * are needed (or *i->)
+        }
+    }
 }

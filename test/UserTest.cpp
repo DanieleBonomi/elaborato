@@ -5,7 +5,6 @@
 #include "gtest/gtest.h"
 #include "../headers/Server.h"
 #include "../headers/Chat.h"
-#include "../headers/User.h"
 #include "ServerFixture.cpp"
 
 TEST_F(ServerFixture,BasicWriteTest) {

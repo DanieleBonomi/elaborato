@@ -6,7 +6,10 @@
 #include "../headers/Message.h"
 
 
-Message::Message(const std::string &text, const User * sender, int channel) : text(text),sender(sender),channel (channel)  {}
+Message::Message(const std::string &text, const User * sender, int channel)
+    : text(text),sender(sender),channel (channel),id(idCount++)  {}
+
+int Message::idCount=0;
 
 const std::string &Message::getText() const {
     return text;
