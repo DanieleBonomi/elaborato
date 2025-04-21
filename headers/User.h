@@ -24,13 +24,13 @@ public:
 
     const std::string &getUsername() const;
 
-    virtual void onMessageReceived(Message &m) override;
+    virtual void onMessageReceived(std::shared_ptr<Message> message) override;
 
 private:
     int id;
     std::string username;
     bool verbose;
-    std::list<Message *> unreadMessages; // using normal pointers because we can't use references in list
+    std::list<std::shared_ptr<Message>> unreadMessages; // using normal pointers because we can't use references in list
     // (no need to call destructor because the memory is managed by the server)
 public:
     bool isVerbose() const;

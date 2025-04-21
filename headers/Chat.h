@@ -16,7 +16,7 @@ class Chat : MessageSender {
 
 public:
     explicit Chat(int channel);
-    virtual void send(Message message) override;
+    virtual void send(std::shared_ptr<Message> message) override;
     virtual void subscribe(MessageReceiver *user) override;
     virtual void unsubscribe(MessageReceiver *user) override;
 

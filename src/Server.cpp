@@ -42,13 +42,13 @@ int Server::getFreeId() {
     return t;
 }
 
-void Server::onMessageReceived(Message &message) {
+void Server::onMessageReceived(std::shared_ptr<Message> message) {
     if (verbose) {
-        std::cout << "Server <-" << message.getSender()->getUsername() << ": " << message.getText() << std::endl;
+        std::cout << "Server <-" << message->getSender()->getUsername() << ": " << message->getText() << std::endl;
     }
-    message.setRead(this);
+    message->setRead(this);
 
-    messageLog[message.getChannel()].push_back(&message);
+    messageLog[message->getChannel()].push_back(message);
     //mex.channel will be still stored in messageLog chat even if irrelevant
 }
 
@@ -131,7 +131,7 @@ void Server::printAllChats() {
 
 Server::Server(int maxChats, bool verbose) : maxChats(maxChats), verbose(verbose) {}
 
-std::list<Message *> Server::getMessageFromChat(int channel) const {
+std::list<std::shared_ptr<Message>> Server::getMessageFromChat(int channel) const {
     return messageLog.at(channel);
 }
 

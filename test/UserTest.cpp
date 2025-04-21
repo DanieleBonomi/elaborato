@@ -16,7 +16,7 @@ TEST_F(ServerFixture,BasicWriteTest) {
     ASSERT_EQ(server.getMessageFromChat(0).size(), 0) << "MessageLog isn't empty before first message";
     server.getUserAtId(t_id)->writeMessage(str, 0);
     ASSERT_EQ(server.getMessageFromChat(0).size(), 1) << "MessageLog empty after first message";
-    EXPECT_TRUE(server.getMessageFromChat(0).back().getText() == str) << "First message was damaged in MessageLog";
+    EXPECT_TRUE(server.getMessageFromChat(0).back()->getText() == str) << "First message was damaged in MessageLog";
 
 }
 TEST_F(ServerFixture,UnicodeTest) {
@@ -25,8 +25,8 @@ TEST_F(ServerFixture,UnicodeTest) {
 
     EXPECT_NO_THROW(server.getUserAtId(t_id)->writeMessage(str2, 0))<< "Unicode messages cause error";
 
-    EXPECT_TRUE(server.getMessageFromChat(0).back().getText() == str2 &&
-                server.getMessageFromChat(0).back().getSender() == server.getUserAtId(t_id))
+    EXPECT_TRUE(server.getMessageFromChat(0).back()->getText() == str2 &&
+                server.getMessageFromChat(0).back()->getSender() == server.getUserAtId(t_id))
                         << "Message with unicode was damaged";
 }
 TEST(ServerTest,onMessageReceivedTest) {
@@ -35,9 +35,7 @@ TEST(ServerTest,onMessageReceivedTest) {
     std::string t = "Tizio";
     int t_id = server.addUser(t);
     std::string str3 = "Direct onMessageReceived";
-    Message m = Message(str3,server.getUserAtId(t_id),0);
-    server.getUserAtId(t_id)->onMessageReceived(m);
-    server.onMessageReceived(m);
-    EXPECT_TRUE(server.getMessageFromChat(0).back().getText()==str3 && server.getMessageFromChat(0).back().getSender()==server.getUserAtId(t_id))<< "direct onMessageReceived not working";
-
+    auto m = std::make_shared<Message>(str3,server.getUserAtId(t_id),0);
+    EXPECT_THROW(server.getUserAtId(t_id)->onMessageReceived(m),std::runtime_error) << "direct onMessage allowed";
+    EXPECT_THROW(server.onMessageReceived(m),std::runtime_error) << "direct onMessage allowed";
 }

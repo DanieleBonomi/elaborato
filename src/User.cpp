@@ -42,10 +42,11 @@ void User::writeMessage(const std::string &text, int channel) {
 
 }
 
-void User::onMessageReceived(Message &m) {
-    std::cout << m.getText();
-    unreadMessages.push_back(&m);
-    std::cout << m.getSender()->getUsername();
+void User::onMessageReceived(std::shared_ptr<Message> message) {
+    if (message->getSender()==this) { // If this user sent the message, no need to read it
+        message->setRead(this);
+    }
+    unreadMessages.push_back(message);
 }
 
 bool User::isVerbose() const {
@@ -57,7 +58,7 @@ void User::setVerbose(bool verbose) {
 }
 
 void User::readAll() {
-    for (auto el: unreadMessages) {
+    for (const auto& el: unreadMessages) {
         el->setRead(this);
         if (verbose) {
             std::cout << username << " <- " << el->getSender()->getUsername() << ": " << el->getText() << std::endl;
