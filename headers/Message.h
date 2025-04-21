@@ -8,6 +8,10 @@
 
 #include <string>
 #include <memory>
+#include <map>
+#include <list>
+
+class MessageReceiver;
 class User;
 
 class Message {
@@ -20,11 +24,17 @@ public:
 
     Message(const std::string &text, const User * sender, int channel);
 
+    void setUpRead(const std::list<MessageReceiver *>& users);
+
+    void setRead(const MessageReceiver * user);
+
+
 
 private:
     std::string text;
     const User * sender;
     int channel;
+    std::map<const MessageReceiver *,bool> read; // user id, read
 };
 
 

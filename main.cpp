@@ -25,7 +25,12 @@ int main() {
     User * tizio = server.getUserAtId(id1);
 
     tizio->writeMessage("Ciao mondo!",1);
+    std::cout<< 123;
+    std::cout<< 123;
     tizio->writeMessage("Ciao chat privata!",0);
+
+    User * caio = server.getUserAtId(id2);
+    caio->readAll();
 
     server.printAllChats();
 

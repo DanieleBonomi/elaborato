@@ -42,10 +42,10 @@ void User::writeMessage(const std::string &text, int channel) {
 
 }
 
-void User::onMessageReceived(const Message &m) {
-    if (verbose) {
-        std::cout << username << " <- " << m.getSender()->getUsername() << ": " << m.getText() << std::endl;
-    }
+void User::onMessageReceived(Message &m) {
+    std::cout << m.getText();
+    unreadMessages.push_back(&m);
+    std::cout << m.getSender()->getUsername();
 }
 
 bool User::isVerbose() const {
@@ -54,4 +54,13 @@ bool User::isVerbose() const {
 
 void User::setVerbose(bool verbose) {
     User::verbose = verbose;
+}
+
+void User::readAll() {
+    for (auto el: unreadMessages) {
+        el->setRead(this);
+        if (verbose) {
+            std::cout << username << " <- " << el->getSender()->getUsername() << ": " << el->getText() << std::endl;
+        }
+    }
 }
