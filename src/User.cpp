@@ -65,3 +65,16 @@ void User::readAll() {
         }
     }
 }
+
+void User::onMessageModified(std::shared_ptr<Message> message) {
+    bool stillUnread = false;
+    for (auto & mex : unreadMessages) {
+        if (mex->id == message->id) {
+            stillUnread = true;
+            mex = message;
+        }
+    }
+    if (!stillUnread) {
+        onMessageReceived(message);
+    }
+}

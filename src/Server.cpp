@@ -146,4 +146,15 @@ void Server::setVerbose(bool verbose) {
     }
 }
 
+void Server::onMessageModified(std::shared_ptr<Message> message) {
+    for (auto & it : messageLog[message->getChannel()]) {
+        if (it->id == message->id) {
+            it=message;
+            message->setRead(this);
+            return;
+        }
+    }
+    throw std::runtime_error("Trying to modify message which doesn't exists");
+}
+
 

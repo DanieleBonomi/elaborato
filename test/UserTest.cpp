@@ -51,3 +51,27 @@ TEST(ServerTest,onMessageReceivedTest) {
     EXPECT_THROW(server.getUserAtId(t_id)->onMessageReceived(m),std::runtime_error) << "direct onMessage allowed";
     EXPECT_THROW(server.onMessageReceived(m),std::runtime_error) << "direct onMessage allowed";
 }
+
+TEST_F(ServerFixture,ModificationTest) {
+    User * tizio = server.getUserAtId(t_id);
+    User * caio = server.getUserAtId(c_id);
+    tizio->writeMessage("Hello",0);
+    auto mex = server.getMessageFromChat(0).back();
+    auto newMex = std::make_shared<Message>(*mex,"Ciao");
+    EXPECT_NO_THROW(server.getChatAtChannel(0)->modify(newMex) )
+        << "Error modifying message";
+    EXPECT_NO_THROW(tizio->readAll()) << "Error modifying message in the user who modified it";
+    EXPECT_NO_THROW(caio->readAll()) << "Error modifying message in the user who received it";
+    EXPECT_TRUE(server.getMessageFromChat(0).size()==1)
+        << "The server stores the modified message more than once";
+    auto modif = server.getMessageFromChat(0).back(); // modified mex
+    EXPECT_TRUE(modif->getText()=="Ciao") << "Modified message has wrong text";
+    EXPECT_TRUE(modif->getChannel() == mex->getChannel()) << "Modified message has wrong channel";
+    EXPECT_TRUE(modif->getSender() == mex->getSender()) << "Modified message has wrong sender";
+    EXPECT_TRUE(modif->id == modif->id) << "Modified message has wrong id";
+
+
+
+
+
+}

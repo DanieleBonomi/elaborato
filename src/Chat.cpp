@@ -44,3 +44,15 @@ void Chat::send(const std::string &text, User * user) {
 int Chat::getChannel() const {
     return channel;
 }
+
+void Chat::modify(std::shared_ptr<Message> message) {
+    if (std::find(receivers.begin(), receivers.end(), message->getSender())!=receivers.end()) {
+
+        message->setUpRead(receivers); // set all read fields as false
+
+        for (auto item: receivers) {
+            item->onMessageModified(message);
+        }
+    } else {throw std::runtime_error("Message modified in chat by user outside chat"); }
+
+}

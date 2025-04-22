@@ -13,6 +13,7 @@ public:
     virtual ~MessageReceiver();
     MessageReceiver() = default;
     virtual void onMessageReceived(std::shared_ptr<Message> message) =0;
+    virtual void onMessageModified(std::shared_ptr<Message> message) = 0;
 };
 
 

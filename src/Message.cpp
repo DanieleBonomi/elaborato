@@ -43,3 +43,10 @@ bool Message::hasRead(const MessageReceiver * user) const {
     }
     throw std::runtime_error("Checking read for user who never received the message");
 }
+
+Message::Message(const Message &other, const std::string& text) {
+    this->id = other.id;
+    this->channel = other.channel;
+    this->sender = other.sender;
+    this->text = text;
+}

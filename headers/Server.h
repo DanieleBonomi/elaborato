@@ -41,6 +41,11 @@ public:
 
     void setVerbose(bool verbose);
 
+private:
+    void onMessageModified(std::shared_ptr<Message> message) override;
+
+public:
+
     bool isVerbose() const;
 
     explicit Server(int maxChats=10, bool verbose = true);
@@ -57,7 +62,6 @@ private:
 
     std::map<const int,Chat *> chats;
     std::list<User *> users;
-
 
     std::map<const int,std::list<std::shared_ptr<Message>>> messageLog; //int represents chat channel
 //FIXME aggiungere unreadMessages (server-side, int)

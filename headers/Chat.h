@@ -21,6 +21,10 @@ public:
     virtual void unsubscribe(MessageReceiver *user) override;
 
     void send(const std::string & text, User * user);
+    void modify(std::shared_ptr<Message> message) override;
+
+
+public:
 
     int getChannel() const;
 

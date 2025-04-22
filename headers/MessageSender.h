@@ -18,8 +18,10 @@ public:
     virtual ~MessageSender() = default; // this d'tor mustn't free the memory of the pointed receivers, because they will be needed later
 
     virtual void send(std::shared_ptr<Message> message) = 0;
+    virtual void modify(std::shared_ptr<Message> message) = 0;
     virtual void subscribe(MessageReceiver *user) = 0;
     virtual void unsubscribe(MessageReceiver *user) = 0;
+
 
 
 protected:

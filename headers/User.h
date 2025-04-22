@@ -20,6 +20,8 @@ public:
     void closeChat(Chat *chat);
     void writeMessage(const std::string & text, int channel);
 
+    void onMessageModified(std::shared_ptr<Message> message) override;
+
     int getId() const;
 
     const std::string &getUsername() const;
