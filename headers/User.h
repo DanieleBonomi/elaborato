@@ -13,34 +13,29 @@
 
 class User : public MessageReceiver {
 public:
-    explicit User(const std::string username, Server* server);
+    explicit User(std::string username, Server* server);
+
     void openChat(int channel);
     void closeChat(int channel);
     void openChat(Chat *chat);
     void closeChat(Chat *chat);
-    void writeMessage(const std::string & text, int channel);
 
+    void writeMessage(const std::string & text, int channel);
+    void onMessageReceived(std::shared_ptr<Message> message) override;
     void onMessageModified(std::shared_ptr<Message> message) override;
+    void readAll();
 
     int getId() const;
-
     const std::string &getUsername() const;
 
-    virtual void onMessageReceived(std::shared_ptr<Message> message) override;
+    bool isVerbose() const;
+    void setVerbose(bool verbose);
 
 private:
     int id;
     std::string username;
     bool verbose;
     std::list<std::shared_ptr<Message>> unreadMessages;
-
-public:
-    bool isVerbose() const;
-    void setVerbose(bool verbose);
-
-    void readAll();
-
-private:
     Server* server;
 };
 

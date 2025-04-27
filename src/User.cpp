@@ -13,11 +13,11 @@ User::User(const std::string username, Server* server) : username(username), ser
 }
 
 void User::openChat(int channel) {
-    server->getChatAtChannel(channel)->subscribe(this);
+    server->getChatAt(channel)->subscribe(this);
 }
 
 void User::closeChat(int channel) {
-    server->getChatAtChannel(channel)->unsubscribe(this);
+    server->getChatAt(channel)->unsubscribe(this);
 }
 
 void User::openChat(Chat *chat) {
@@ -38,7 +38,7 @@ const std::string &User::getUsername() const {
 void User::writeMessage(const std::string &text, int channel) {
     if (verbose)
         std::cout<< username << " -> " << text << " in channel " << channel << std::endl;
-    server->getChatAtChannel(channel)->send(text, this);
+    server->getChatAt(channel)->send(text, this);
 
 }
 

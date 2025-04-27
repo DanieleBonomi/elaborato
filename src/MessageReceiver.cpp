@@ -3,7 +3,3 @@
 //
 
 #include "../headers/MessageReceiver.h"
-
-MessageReceiver::~MessageReceiver() {
-
-}

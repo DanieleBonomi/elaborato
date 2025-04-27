@@ -15,33 +15,28 @@ class MessageReceiver;
 class User;
 
 class Message {
+
 public:
-    const std::string &getText() const;
-
-    const User * getSender() const;
-
-    int getChannel() const;
-
     Message(const std::string &text, const User * sender, int channel);
-
-    void setUpRead(const std::list<MessageReceiver *>& users);
-
-    void setRead(const MessageReceiver * user);
-
-    bool hasRead(const MessageReceiver * user) const;
-
     Message(const Message& other, const std::string& text);
 
+    const std::string &getText() const;
+    const User * getSender() const;
+    int getChannel() const;
 
+    void setUpRead(const std::list<MessageReceiver *>& users);
+    void setRead(const MessageReceiver * user);
+    bool hasRead(const MessageReceiver * user) const;
+
+
+    static int idCount;
+    int id;
 
 private:
     std::string text;
     const User * sender;
     int channel;
     std::map<const MessageReceiver *,bool> read; // user id, read
-public:
-    static int idCount;
-    int id;
 };
 
 

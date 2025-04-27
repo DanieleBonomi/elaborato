@@ -16,18 +16,13 @@ TEST(ServerTest,ChatCheck) {
     Server s;
     s.addChat(1);
     s.addChat(2);
-    EXPECT_EQ(s.getChatAtChannel(1)->getChannel(),1) << "Chat at channel doesn't have correct channel";
-    EXPECT_EQ(s.getChatAtChannel(2)->getChannel(),2) << "Chat at channel doesn't have correct channel";
+    EXPECT_EQ(s.getChatAt(1)->getChannel(), 1) << "Chat at channel doesn't have correct channel";
+    EXPECT_EQ(s.getChatAt(2)->getChannel(), 2) << "Chat at channel doesn't have correct channel";
 
 
     s.removeChat(1);
-    bool err = false;
-    try {
-        auto chat = s.getChatAtChannel(1);
-    } catch (...) {
-        err = true;
-    }
-    EXPECT_TRUE(err) << "Chat still in server list after being removed";
+
+    EXPECT_THROW(s.getChatAt(1),std::out_of_range) << "Chat still in server list after being removed";
 
     EXPECT_THROW(s.removeChat(1),std::runtime_error) << "Chat can be removed twice";
 
@@ -64,7 +59,7 @@ TEST(ServerTest,UserCheck) {
     EXPECT_THROW(server.removeUser(id1);,std::runtime_error)
         << "User can removed be even if outside of users";
 }
-#include "ServerFixture.cpp"
+#include "ServerFixture.h"
 
 TEST_F(ServerFixture,AvoidSameMessageId) {
     const int totCount = 10;

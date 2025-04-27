@@ -32,7 +32,7 @@ void Server::removeChat(int channel) {
     } else throw std::runtime_error("Attempting to remove chat not present in chats");
 }
 
-Chat * Server::getChatAtChannel(int channel) const{
+Chat * Server::getChatAt(int channel) const {
     return chats.at(channel);
 }
 
@@ -98,7 +98,7 @@ void Server::signAllToChat(int channel) {
         c->subscribe(user);
 }
 
-User *Server::getUserAtUsername(const std::string &username) const {
+User *Server::getUserAt(const std::string &username) const {
     for (auto user : users) {
         if (user->getUsername() == username) {
             return user;

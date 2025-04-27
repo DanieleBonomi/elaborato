@@ -16,20 +16,19 @@ class Chat : MessageSender {
 
 public:
     explicit Chat(int channel);
-    virtual void send(std::shared_ptr<Message> message) override;
-    virtual void subscribe(MessageReceiver *user) override;
-    virtual void unsubscribe(MessageReceiver *user) override;
 
-    void send(const std::string & text, User * user);
+    void subscribe(MessageReceiver *user) override;
+    void unsubscribe(MessageReceiver *user) override;
+
+    void send(const std::string & text, User * user) override;
+    void send(std::shared_ptr<Message> message) override;
     void modify(std::shared_ptr<Message> message) override;
-
-
-public:
 
     int getChannel() const;
 
 private:
     int channel;
+    std::list<MessageReceiver *> receivers;
 };
 
 

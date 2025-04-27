@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "../headers/Server.h"
 #include "../headers/Chat.h"
-#include "ServerFixture.cpp"
+ #include "ServerFixture.h"
 
 TEST_F(ServerFixture,BasicWriteTest) {
     std::string str = "Hi Test";
@@ -58,7 +58,7 @@ TEST_F(ServerFixture,ModificationTest) {
     tizio->writeMessage("Hello",0);
     auto mex = server.getMessageFromChat(0).back();
     auto newMex = std::make_shared<Message>(*mex,"Ciao");
-    EXPECT_NO_THROW(server.getChatAtChannel(0)->modify(newMex) )
+    EXPECT_NO_THROW(server.getChatAt(0)->modify(newMex) )
         << "Error modifying message";
     EXPECT_NO_THROW(tizio->readAll()) << "Error modifying message in the user who modified it";
     EXPECT_NO_THROW(caio->readAll()) << "Error modifying message in the user who received it";
