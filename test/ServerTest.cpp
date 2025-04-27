@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "../headers/Server.h"
 #include "../headers/Chat.h"
-#include "../headers/User.h"
+#include "ServerFixture.h"
 
 TEST(ServerTest,AvoidSameIDs) {
     Server s;
@@ -59,7 +59,6 @@ TEST(ServerTest,UserCheck) {
     EXPECT_THROW(server.removeUser(id1);,std::runtime_error)
         << "User can removed be even if outside of users";
 }
-#include "ServerFixture.h"
 
 TEST_F(ServerFixture,AvoidSameMessageId) {
     const int totCount = 10;
