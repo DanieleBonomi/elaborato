@@ -3,3 +3,7 @@
 //
 
 #include "..\headers\MessageSender.h"
+
+MessageSender::~MessageSender() {
+
+}

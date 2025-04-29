@@ -15,6 +15,7 @@
 
 class MessageSender {
 public:
+    virtual ~MessageSender();
     virtual void send(std::shared_ptr<Message> message) = 0;
     virtual void send(const std::string & text, User * user) = 0;
     virtual void modify(std::shared_ptr<Message> message) = 0;
